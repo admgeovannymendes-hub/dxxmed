@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situação de Aprendizagem 3 — DomXikoXikote Massas & Doces</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Rwpl56gj4WfcrEgqjuO7LD_hD8YihiLyOZ5WmACFXC7TNawRtyN-DeTyWFoZo6AndKRmre1QKeW8vUe4MQ8GDol-Ua1Z_kCuo_7SxmM2pZS6J6ZJuZmNUDsms1PTo0Rxpa6PiR2SUy_KBO77mhPhk1I9xBIcQnTf9LqoP-zuYOqj5lvYDult6r9tvAOOlBpFKh9FmPiFkBBl5M7XS6OSOd7JfnIP641-nW62p8k_HFlZs8A0G4Qaq6DkqQ1e1r6dlaKP16W1cC1_DaKZGr1YnsniNkzRnApN3LSGPUJhfVCK7Vz8vtXWV5rY4IL0ECDR-vMGFAx4QFA9U1IUVmEGCxc4h3Obfr3grxyOjarqiAw" charset="UTF-8"></script><style>
+        :root {
+            --bg-canvas: #FAF7F2;
+            --surface: #FFFFFF;
+            --surface-warm: #FDFBF7;
+            --terracotta: #B84A27;
+            --terracotta-dark: #8C3418;
+            --terracotta-soft: #FDF0EB;
+            --olive: #3D5A45;
+            --olive-dark: #283E2E;
+            --olive-soft: #EEF3EF;
+            --ochre: #D98A2B;
+            --ink: #1F2421;
+            --ink-muted: #57605B;
+            --border: #E5DDD3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--ink);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Barra Superior */
+        .topbar {
+            background-color: var(--olive-dark);
+            color: #FAF7F2;
+            padding: 14px 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            border-bottom: 3px solid var(--ochre);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 18px rgba(31, 36, 33, 0.14);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-tag {
+            background: var(--terracotta);
+            color: #FFFFFF;
+            font-weight: 800;
+            font-size: 0.75rem;
+            padding: 5px 10px;
+            border-radius: 6px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .brand h1 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.09);
+            color: #E5DDD3;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #FFFFFF;
+        }
+
+        .tab-btn.active {
+            background: var(--terracotta);
+            color: #FFFFFF;
+            border-color: var(--terracotta);
+            font-weight: 700;
+        }
+
+        .tool-btn {
+            background: #FAF7F2;
+            color: var(--ink);
+            border: 1px solid var(--border);
+            padding: 7px 14px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .tool-btn:hover {
+            background: #EFE9DF;
+        }
+
+        /* Área Principal */
+        .wrapper {
+            max-width: 1060px;
+            width: 100%;
+            margin: 26px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .stage-sheet {
+            display: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 12px 32px rgba(40, 62, 46, 0.07);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .stage-sheet.visible {
+            display: block;
+            animation: slideUp 0.25s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sheet-header {
+            background: var(--surface-warm);
+            border-bottom: 2px solid var(--border);
+            padding: 24px 34px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            color: var(--terracotta);
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        .sheet-header h2 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--ink);
+            line-height: 1.2;
+        }
+
+        .step-pill {
+            background: var(--olive-soft);
+            color: var(--olive-dark);
+            border: 1px solid #C8D6CC;
+            font-weight: 800;
+            font-size: 0.82rem;
+            padding: 8px 14px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        .sheet-body {
+            padding: 26px 34px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Caixa de Resumo Simples ("O que fazer") */
+        .action-guide {
+            background: var(--terracotta-soft);
+            border-left: 5px solid var(--terracotta);
+            border-radius: 12px;
+            padding: 16px 20px;
+        }
+
+        .action-guide h3 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.02rem;
+            color: var(--terracotta-dark);
+            margin-bottom: 6px;
+        }
+
+        .action-guide p {
+            font-size: 0.94rem;
+            line-height: 1.6;
+            color: var(--ink);
+        }
+
+        .guide-steps {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .guide-steps li {
+            font-size: 0.92rem;
+            line-height: 1.5;
+            padding-left: 22px;
+            position: relative;
+        }
+
+        .guide-steps li::before {
+            content: "➔";
+            color: var(--terracotta);
+            font-weight: 800;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Indicadores */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .metric-box {
+            background: var(--surface-warm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--ochre);
+            border-radius: 12px;
+            padding: 15px 18px;
+        }
+
+        .metric-box .m-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--ink-muted);
+            margin-bottom: 4px;
+        }
+
+        .metric-box .m-num {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+
+        .metric-box .m-desc {
+            font-size: 0.84rem;
+            line-height: 1.45;
+            color: var(--ink-muted);
+        }
+
+        /* Gráfico Neutro */
+        .chart-panel {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 24px;
+            background: #FFFFFF;
+        }
+
+        .chart-panel-head {
+            margin-bottom: 14px;
+        }
+
+        .chart-panel-head h4 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.08rem;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+
+        .chart-panel-head p {
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+        }
+
+        .chart-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        .c-row {
+            display: grid;
+            grid-template-columns: 310px 1fr 75px;
+            align-items: center;
+            gap: 14px;
+        }
+
+        @media (max-width: 760px) {
+            .c-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+        }
+
+        .c-name {
+            font-size: 0.87rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .c-code {
+            display: inline-block;
+            background: #EFE9DF;
+            color: var(--ink);
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 6px;
+        }
+
+        .c-track {
+            background: #F3EFEA;
+            height: 22px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .c-fill {
+            height: 100%;
+            background-color: var(--olive);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            color: #FFFFFF;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .c-pct {
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: var(--ink);
+            text-align: right;
+        }
+
+        /* Grade de Relatórios Setoriais (4 Blocos) */
+        .reports-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 780px) {
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .info-card {
+            background: var(--surface-warm);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px;
+        }
+
+        .info-card h4 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1rem;
+            color: var(--ink);
+            margin-bottom: 10px;
+            padding-bottom: 7px;
+            border-bottom: 2px solid var(--ochre);
+        }
+
+        .fact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .fact-list li {
+            font-size: 0.88rem;
+            line-height: 1.52;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .fact-list li::before {
+            content: "▪";
+            color: var(--terracotta);
+            font-size: 1.05rem;
+            position: absolute;
+            left: 0;
+            top: -1px;
+        }
+
+        /* Questões de Investigação */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 780px) {
+            .questions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .task-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--olive);
+            border-radius: 12px;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .task-level {
+            font-size: 0.74rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--terracotta);
+        }
+
+        .task-card h4 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.02rem;
+            color: var(--ink);
+        }
+
+        .task-card p {
+            font-size: 0.89rem;
+            line-height: 1.58;
+            color: var(--ink);
+        }
+
+        /* Blocos do Pitch */
+        .blocks-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .pitch-card {
+            background: var(--surface-warm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--terracotta);
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .p-tag {
+            display: inline-block;
+            background: var(--ink);
+            color: #FAF7F2;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 3px 9px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        .pitch-card h5 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1rem;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .pitch-card p {
+            font-size: 0.86rem;
+            line-height: 1.5;
+            color: var(--ink-muted);
+        }
+
+        /* Rodapé */
+        .footer-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .nav-arrow {
+            background: var(--olive-dark);
+            color: #FAF7F2;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .nav-arrow:disabled {
+            background: #D6CFC6;
+            color: #8C857B;
+            cursor: not-allowed;
+        }
+
+        @media print {
+            body {
+                background: #FFFFFF;
+            }
+            .topbar,
+            .footer-controls {
+                display: none !important;
+            }
+            .wrapper {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .stage-sheet {
+                display: block !important;
+                box-shadow: none;
+                border: 1px solid #CCCCCC;
+                border-radius: 10px;
+                margin: 0;
+                page-break-after: always;
+                break-after: page;
+            }
+            .stage-sheet:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand-tag">UC1 • S.A. 3</span>
+            <h1>DomXikoXikote Massas & Doces</h1>
+        </div>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showStage(0)">1. Cenário & Dados</button>
+            <button class="tab-btn" onclick="showStage(1)">2. Investigação</button>
+            <button class="tab-btn" onclick="showStage(2)">3. Solução</button>
+            <button class="tab-btn" onclick="showStage(3)">4. Pitch Final</button>
+        </nav>
+
+        <div>
+            <button class="tool-btn" onclick="window.print()">Imprimir / PDF</button>
+        </div>
+    </header>
+
+    <main class="wrapper">
+
+        <!-- ================= PÁGINA 1: CENÁRIO & DADOS ================= -->
+        <section class="stage-sheet visible">
+            <div class="sheet-header">
+                <div>
+                    <span class="eyebrow">Dossiê da Empresa • Leitura & Cruzamento de Informações</span>
+                    <h2>O Caso: DomXikoXikote Massas & Doces</h2>
+                </div>
+                <span class="step-pill">PARTE 01 / 04</span>
+            </div>
+
+            <div class="sheet-body">
+                <div class="action-guide">
+                    <h3>O que fazer nesta etapa</h3>
+                    <p>Leiam atentamente o histórico, os números do gráfico e os relatórios dos quatro setores abaixo. A <strong>DomXikoXikote Massas & Doces</strong> fechou <strong>1.200 pedidos</strong> no mês passado (22 dias úteis), mas o caixa fechou no vermelho e os clientes estão cancelando encomendas. Sua equipe foi contratada para diagnosticar a operação e propor um plano de recuperação.</p>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="m-title">Orçamento de Investimento</div>
+                        <div class="m-num">R$ 5.000,00</div>
+                        <div class="m-desc">Valor máximo único para melhorias (proibido contratar novos funcionários fixos).</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="m-title">Prazo de Implantação</div>
+                        <div class="m-num">30 Dias</div>
+                        <div class="m-desc">Tempo limite para colocar o novo processo em funcionamento.</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="m-title">Total de Reclamações</div>
+                        <div class="m-num">250 Ocorrências</div>
+                        <div class="m-desc">Registradas no último mês pelo atendimento ao cliente.</div>
+                    </div>
+                </div>
+
+                <!-- Gráfico Neutro -->
+                <div class="chart-panel">
+                    <div class="chart-panel-head">
+                        <h4>Registro de Ocorrências do Último Mês (250 Falhas)</h4>
+                        <p>Distribuição das reclamações registradas no atendimento:</p>
+                    </div>
+
+                    <div class="chart-bars">
+                        <div class="c-row">
+                            <div class="c-name"><span class="c-code">OC-01</span> Entrega realizada após o prazo (depois das 17h)</div>
+                            <div class="c-track"><div class="c-fill" style="width: 100%;">125</div></div>
+                            <div class="c-pct">50%</div>
+                        </div>
+                        <div class="c-row">
+                            <div class="c-name"><span class="c-code">OC-02</span> Pedido separado com item ou endereço errado</div>
+                            <div class="c-track"><div class="c-fill" style="width: 60%;">75</div></div>
+                            <div class="c-pct">30%</div>
+                        </div>
+                        <div class="c-row">
+                            <div class="c-name"><span class="c-code">OC-03</span> Embalagem amassada no transporte</div>
+                            <div class="c-track"><div class="c-fill" style="width: 16%;">20</div></div>
+                            <div class="c-pct">8%</div>
+                        </div>
+                        <div class="c-row">
+                            <div class="c-name"><span class="c-code">OC-04</span> Demora na emissão da Nota Fiscal</div>
+                            <div class="c-track"><div class="c-fill" style="width: 12%;">15</div></div>
+                            <div class="c-pct">6%</div>
+                        </div>
+                        <div class="c-row">
+                            <div class="c-name"><span class="c-code">OC-05</span> Falha na maquininha de cartão na entrega</div>
+                            <div class="c-track"><div class="c-fill" style="width: 8%;">10</div></div>
+                            <div class="c-pct">4%</div>
+                        </div>
+                        <div class="c-row">
+                            <div class="c-name"><span class="c-code">OC-06</span> Outros motivos diversos</div>
+                            <div class="c-track"><div class="c-fill" style="width: 4%;">5</div></div>
+                            <div class="c-pct">2%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4 Blocos de Relatórios Setoriais -->
+                <div class="reports-grid">
+                    <div class="info-card">
+                        <h4>Relatório 1 • Escritório & Atendimento</h4>
+                        <ul class="fact-list">
+                            <li><strong>10 assistentes</strong> trabalham das 08h às 17h (com 1h de almoço).</li>
+                            <li>Os pedidos chegam por <strong>WhatsApp, e-mail e telefone</strong>, e cada assistente anota em blocos de papel ou planilhas próprias no seu PC.</li>
+                            <li><strong>4 assistentes</strong> relatam que perdem o foco porque precisam responder clientes no WhatsApp ao mesmo tempo em que fecham o caixa.</li>
+                            <li><strong>3 assistentes mais antigos</strong> não têm facilidade com ferramentas digitais e preferem anotar tudo no caderno.</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Relatório 2 • Produção (Cozinha)</h4>
+                        <ul class="fact-list">
+                            <li>O supervisor da cozinha pediu à diretoria a compra urgente de <strong>novos fornos e formas industriais</strong>, alegando que a produção está sobrecarregada.</li>
+                            <li>Porém, o controle interno mostra que <strong>95% das massas e doces</strong> ficam prontos e embalados na bancada antes das <strong>14h00</strong>.</li>
+                            <li>Todos os dias, entre <strong>15h30 e 17h00</strong>, os pedidos ficam parados aguardando a conferência de endereços vinda do escritório.</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Relatório 3 • Logística & Entregas</h4>
+                        <ul class="fact-list">
+                            <li><strong>35% das entregas</strong> são feitas por motoboys terceirizados.</li>
+                            <li>Sempre que um motoboy fica parado no pátio esperando conferência por mais de 20 minutos após as 15h30, a empresa paga uma <strong>taxa de espera de R$ 15,00</strong>. No mês passado, ocorreram <strong>100 esperas</strong> cobradas.</li>
+                            <li>Cada falha de entrega registrada (reentrega ou troca) custa <strong>R$ 36,00</strong> de logística.</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Relatório 4 • Custos, Perdas & Jornada Extra</h4>
+                        <ul class="fact-list">
+                            <li><strong>Perecibilidade:</strong> Como são massas e doces frescos, pedidos entregues com mais de <strong>2 horas de atraso</strong> (40 casos no mês) ou devolvidos por erro de item/endereço (<strong>OC-02</strong>) são descartados, gerando perda extra de <strong>R$ 22,00</strong> de insumos por pedido.</li>
+                            <li><strong>Horas extras:</strong> Cada um dos <strong>10 assistentes</strong> fez, em média, <strong>12 horas extras</strong> no mês (valor de <strong>R$ 20,00</strong> por hora).</li>
+                            <li><strong>Papelaria e impressão:</strong> R$ 1.900,00 gastos no mês.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 2: INVESTIGAÇÃO (HOJE) ================= -->
+        <section class="stage-sheet">
+            <div class="sheet-header">
+                <div>
+                    <span class="eyebrow">Etapa 1 • Pensamento Crítico & Cruzamento de Dados</span>
+                    <h2>Investigação em Grupo</h2>
+                </div>
+                <span class="step-pill">PARTE 02 / 04</span>
+            </div>
+
+            <div class="sheet-body">
+                <div class="action-guide">
+                    <h3>O que fazer nesta etapa</h3>
+                    <ul class="guide-steps">
+                        <li>Reúnam-se em grupo e analisem os números do gráfico junto com os 4 relatórios da empresa.</li>
+                        <li>Ainda <strong>não proponham soluções</strong>: o objetivo agora é descobrir onde está o prejuízo e o que realmente causa os problemas.</li>
+                        <li>Respondam por escrito às <strong>5 questões abaixo</strong>, registrando todas as contas realizadas.</li>
+                    </ul>
+                </div>
+
+                <div class="questions-grid">
+                    <div class="task-card">
+                        <span class="task-level">Questão 01 • Priorização</span>
+                        <h4>Quais problemas atacar primeiro?</h4>
+                        <p>Observando o gráfico de reclamações, quais são as <strong>principais falhas</strong> que concentram a maior parte das ocorrências? Expliquem por que tentar resolver todos os seis tipos de problemas ao mesmo tempo inviabilizaria o orçamento e o prazo de 30 dias.</p>
+                    </div>
+
+                    <div class="task-card">
+                        <span class="task-level">Questão 02 • Filtro de Fatos</span>
+                        <h4>O pedido da cozinha deve ser atendido?</h4>
+                        <p>O supervisor da cozinha pediu novos fornos e formas alegando sobrecarga. Cruzando o <strong>Relatório 2</strong> com os horários da operação, esse investimento resolveria os atrasos após as 17h? Justifiquem com base nos dados.</p>
+                    </div>
+
+                    <div class="task-card">
+                        <span class="task-level">Questão 03 • Conta Completa do Prejuízo</span>
+                        <h4>Quanto dinheiro está sendo perdido por mês?</h4>
+                        <p>Calculem o prejuízo mensal somando: <strong>(a)</strong> custo logístico das principais ocorrências, <strong>(b)</strong> perda de insumos perecíveis por atraso superior a 2h e por devoluções da OC-02, <strong>(c)</strong> taxas de espera dos motoboys, <strong>(d)</strong> total de horas extras da equipe e <strong>(e)</strong> gastos com papelaria.</p>
+                    </div>
+
+                    <div class="task-card">
+                        <span class="task-level">Questão 04 • Causa-Raiz e Fator Humano</span>
+                        <h4>O que trava a operação entre 15h30 e 17h00?</h4>
+                        <p>Expliquem como o modo de trabalho dos 10 assistentes (canais de entrada, anotações, divisão de tarefas e perfil da equipe) provoca tanto os atrasos na entrega quanto os pedidos separados com item ou endereço errado.</p>
+                    </div>
+
+                    <div class="task-card" style="grid-column: 1 / -1;">
+                        <span class="task-level">Questão 05 • Entrega desta Etapa</span>
+                        <h4>Diagnóstico Oficial da Equipe</h4>
+                        <p>Escrevam um <strong>parecer resumido</strong> apresentando o valor total do prejuízo mensal encontrado e definindo qual meta realista de redução de falhas e custos a equipe se compromete a alcançar em 30 dias.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 3: SOLUÇÃO (QUINTA) ================= -->
+        <section class="stage-sheet">
+            <div class="sheet-header">
+                <div>
+                    <span class="eyebrow">Etapa 2 • Ideação, Processo & Orçamento</span>
+                    <h2>Construção da Solução</h2>
+                </div>
+                <span class="step-pill">PARTE 03 / 04</span>
+            </div>
+
+            <div class="sheet-body">
+                <div class="action-guide">
+                    <h3>O que fazer nesta etapa</h3>
+                    <ul class="guide-steps">
+                        <li>Criem um <strong>novo processo de trabalho</strong> que elimine a causa-raiz descoberta na investigação.</li>
+                        <li>Organizem a divisão de funções entre os 10 assistentes considerando a resistência à tecnologia de parte da equipe.</li>
+                        <li>Construam <strong>1 protótipo prático</strong> e montem o orçamento respeitando o limite de <strong>R$ 5.000,00</strong> e o prazo de <strong>30 dias</strong>.</li>
+                    </ul>
+                </div>
+
+                <div class="reports-grid">
+                    <div class="info-card">
+                        <h4>1. Novo Fluxo, Equipe & Protótipo</h4>
+                        <ul class="fact-list">
+                            <li><strong>Entrada e Registro:</strong> Definam como os pedidos vindos de diferentes canais serão registrados sem perdas ou retrabalho.</li>
+                            <li><strong>Conferência e Despacho:</strong> Estabeleçam regras de horário e checagem para acabar com as taxas de espera dos motoboys e os erros de separação.</li>
+                            <li><strong>Gestão de Pessoas:</strong> Definam como dividir as tarefas entre os 10 assistentes e como integrar os 3 funcionários mais antigos ao novo modelo.</li>
+                            <li><strong>Protótipo Prático:</strong> Construam <strong>1 modelo funcional</strong> da ferramenta ou procedimento criado pela equipe para demonstrar na apresentação.</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>2. Plano de Investimento (Máximo R$ 5.000,00)</h4>
+                        <ul class="fact-list">
+                            <li><strong>Detalhamento de Custos:</strong> Listem cada item, recurso ou ação prevista e seu valor, sem ultrapassar os <strong>R$ 5.000,00</strong>.</li>
+                            <li><strong>Restrição Operacional:</strong> Não é permitido contratar novos funcionários fixos.</li>
+                            <li><strong>Retorno Financeiro:</strong> Calculem em quanto tempo a economia mensal gerada pela solução paga o valor investido pela empresa.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PÁGINA 4: PITCH FINAL (SEXTA) ================= -->
+        <section class="stage-sheet">
+            <div class="sheet-header">
+                <div>
+                    <span class="eyebrow">Etapa 3 • Apresentação & Defesa da Proposta</span>
+                    <h2>Banca da Diretoria (Pitch de 5 Minutos)</h2>
+                </div>
+                <span class="step-pill">PARTE 04 / 04</span>
+            </div>
+
+            <div class="sheet-body">
+                <div class="action-guide">
+                    <h3>O que fazer nesta etapa</h3>
+                    <ul class="guide-steps">
+                        <li>Dividam a fala entre <strong>todos os integrantes</strong> da equipe.</li>
+                        <li>Apresentem o plano completo em <strong>5 minutos</strong> seguindo exatamente a ordem dos 4 blocos abaixo.</li>
+                        <li>Estejam preparados para responder às perguntas da diretoria usando os números calculados pelo grupo.</li>
+                    </ul>
+                </div>
+
+                <div class="blocks-row">
+                    <div class="pitch-card">
+                        <span class="p-tag">BLOCO 01 • 1 MIN</span>
+                        <h5>Diagnóstico em Números</h5>
+                        <p>Apresentem as principais falhas identificadas na operação, justifiquem o descarte de falsos problemas e revelem o prejuízo mensal total da empresa.</p>
+                    </div>
+                    <div class="pitch-card">
+                        <span class="p-tag">BLOCO 02 • 1 MIN</span>
+                        <h5>Causa-Raiz</h5>
+                        <p>Expliquem o que acontece na rotina interna do escritório que provoca o acúmulo no fim da tarde e os erros nos pedidos.</p>
+                    </div>
+                    <div class="pitch-card">
+                        <span class="p-tag">BLOCO 03 • 2 MIN</span>
+                        <h5>Solução, Equipe & Protótipo</h5>
+                        <p>Mostrem como funcionará o novo fluxo, como os 10 assistentes serão organizados e apresentem o modelo prático criado pelo grupo.</p>
+                    </div>
+                    <div class="pitch-card">
+                        <span class="p-tag">BLOCO 04 • 1 MIN</span>
+                        <h5>Orçamento & Retorno</h5>
+                        <p>Detalhem como os R$ 5.000,00 serão investidos e demonstrem a economia projetada após 30 dias.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navegação Inferior -->
+        <div class="footer-controls">
+            <button class="nav-arrow" id="btnPrev" onclick="changeStage(-1)" disabled>← Anterior</button>
+            <span id="stageIndicator" style="font-weight: 700; font-size: 0.9rem; color: var(--ink-muted);">Parte 1 de 4 — Cenário & Dados</span>
+            <button class="nav-arrow" id="btnNext" onclick="changeStage(1)">Próxima →</button>
+        </div>
+
+    </main>
+
+    <script>
+        let activeStage = 0;
+        const sheets = document.querySelectorAll('.stage-sheet');
+        const tabs = document.querySelectorAll('.tab-btn');
+        const stageNames = [
+            "Parte 1 de 4 — Cenário & Dados",
+            "Parte 2 de 4 — Investigação",
+            "Parte 3 de 4 — Solução",
+            "Parte 4 de 4 — Pitch Final"
+        ];
+
+        function showStage(index) {
+            activeStage = index;
+            sheets.forEach((s, i) => s.classList.toggle('visible', i === index));
+            tabs.forEach((t, i) => t.classList.toggle('active', i === index));
+
+            document.getElementById('btnPrev').disabled = index === 0;
+            document.getElementById('btnNext').disabled = index === sheets.length - 1;
+            document.getElementById('stageIndicator').textContent = stageNames[index];
+        }
+
+        function changeStage(step) {
+            const target = activeStage + step;
+            if (target >= 0 && target < sheets.length) {
+                showStage(target);
+            }
+        }
+    </script>
+</body>
+</html>
